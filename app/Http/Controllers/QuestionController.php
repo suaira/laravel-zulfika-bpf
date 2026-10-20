@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -25,13 +24,30 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
-        // dd($request->all()) ;
+        $request->validate([
+            'nama'       => 'required|min:5',
+            'email'      => ['required', 'email'],
+            'pertanyaan' => 'required|min:10|max:300',
+        ]);
 
         $data['nama']       = $request->nama;
         $data['email']      = $request->email;
         $data['pertanyaan'] = $request->pertanyaan;
+
+        return redirect('/home')->with('data', $data);
+        // return redirect()->route('question.respon')->with('data', $data);
+        // return view('home-question-respon', $data);
+    }
+
+    public function showRespon()
+    {
+        $data = session('data');
+
+        if (!$data) {
+            return redirect('/home');
+        }
 
         return view('home-question-respon', $data);
     }
