@@ -163,9 +163,6 @@
                     <div class="card-body">
                         <h5 class="card-title">Form Pertanyaan</h5>
 
-                        <h5 class="card-title font-custom">Form Pertanyaan</h5>
-
-
                         @if (session('data'))
                             <div class="alert alert-info" role="alert">
                                 Terimakasih <strong>{{ session('data.nama') }}</strong>!
