@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+
 use App\Models\Pelanggan;
+use Illuminate\Http\Request;
+
 class PelangganController extends Controller
 {
     /**
@@ -9,7 +11,9 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        //
+            $data['dataPelanggan'] = Pelanggan::all();
+            return view('admin.pelanggan.index', $data);
+        
     }
     /**
      * Show the form for creating a new resource.
