@@ -19,10 +19,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('question/store', [QuestionController::class, 'store'])
     ->name('question.store');
 
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])
+    ->middleware('checkislogin')
+    ->name('dashboard');
 
-Route::resource('pelanggan', PelangganController::class);
-Route::resource('user', UserController::class);
+// Route::resource('pelanggan', PelangganController::class);
+// Route::resource('user', UserController::class);
 
 Route::resource('biodata', BiodataController::class)->parameters([
     'biodata' => 'biodata',
@@ -38,6 +40,16 @@ Route::put('dokumen/{dokuman}', [DokumenController::class, 'update'])->name('dok
 
 Route::post('biodata/{biodata}/foto', [BiodataController::class, 'updateFoto'])->name('biodata.foto');
 
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['checkrole:Super Admin'])->group(function () {
+        Route::resource('user', UserController::class);
+    });
+
+    Route::middleware(['checkrole:Super Admin,mitra'])->group(function () {
+        Route::resource('pelanggan', PelangganController::class);
+    });
+});
+
 use App\Http\Controllers\AuthController;
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -45,3 +57,4 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('auth.logout');
+    

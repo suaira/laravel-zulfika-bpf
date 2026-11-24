@@ -99,6 +99,22 @@
                                         name="password_confirmation">
                                 </div>
                             </div>
+                            <div  class="col-lg-5 col-sm-6">
+                                <!-- Role -->
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select id="role" name="role"
+                                        class="form-control @error('role') is-invalid @enderror">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Super Admin" {{ old('role') == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
+                                        <option value="pelanggan" {{ old('role') == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
+                                        <option value="mitra" {{ old('role') == 'mitra' ? 'selected' : '' }}>Mitra</option>
+                                    </select>
+                                    @error('role')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-3">

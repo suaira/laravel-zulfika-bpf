@@ -25,11 +25,13 @@ class UserController extends Controller
             'name'     => 'required|string|max:100',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
+            'role'     => 'required|in:Super Admin,pelanggan,mitra',
         ]);
 
         $data['name']     = $request->name;
         $data['email']    = $request->email;
         $data['password'] = Hash::make($request->password);
+        $data['role']     = $request->role;
 
         User::create($data);
 
@@ -50,10 +52,12 @@ class UserController extends Controller
             'name'     => 'required|string|max:100',
             'email'    => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
+            'role'     => 'required|in:Super Admin,mitra',
         ]);
 
         $user->name  = $request->name;
         $user->email = $request->email;
+        $user->role  = $request->role;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);

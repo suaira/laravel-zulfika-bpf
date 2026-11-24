@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class AuthController extends Controller
 {
     public function index()
@@ -28,14 +29,6 @@ class AuthController extends Controller
 
             return redirect()->intended(route('dashboard'))
                 ->with('success', 'Login berhasil!');
-        }
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            /** sesssion mulai dibuat **/
-            Auth::login($user);
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('dashboard'));
         }
 
         return back()
