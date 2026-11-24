@@ -37,3 +37,11 @@ Route::delete('dokumen/{dokuman}', [DokumenController::class, 'destroy'])->name(
 Route::put('dokumen/{dokuman}', [DokumenController::class, 'update'])->name('dokumen.update');
 
 Route::post('biodata/{biodata}/foto', [BiodataController::class, 'updateFoto'])->name('biodata.foto');
+
+use App\Http\Controllers\AuthController;
+
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('auth.logout');
